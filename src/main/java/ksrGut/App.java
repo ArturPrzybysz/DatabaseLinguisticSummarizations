@@ -60,7 +60,12 @@ public class App {
             System.out.println(T3.getValue(summary));
             System.out.println(T4.getValue(summary));
             System.out.println(T5.getValue(summary));
-//            System.out.println(T6.getValue(summary));
+            System.out.println(T6.getValue(summary));
+            System.out.println(T7.getValue(summary));
+            System.out.println(T8.getValue(summary));
+            System.out.println(T9.getValue(summary));
+            System.out.println(T10.getValue(summary));
+            System.out.println(T11.getValue(summary));
 
         } catch (IOException e) {
             e.printStackTrace();

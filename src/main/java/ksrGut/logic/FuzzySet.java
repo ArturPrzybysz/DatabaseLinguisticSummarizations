@@ -35,6 +35,10 @@ public class FuzzySet {
         return cardinality() / space.getElements().size();
     }
 
+    public double getCardinalityRatio() {
+        return cardinality() / space.getElements().size();
+    }
+
     FuzzySet complement() {
         Map<Tuple, Double> complementElements = this.elements.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> 1 - e.getValue()));

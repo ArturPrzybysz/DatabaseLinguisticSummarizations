@@ -1,6 +1,5 @@
 package ksrGut.logic.qualityMeasures;
 
-import ksrGut.logic.CrispSet;
 import ksrGut.logic.FuzzySet;
 import ksrGut.logic.summaries.ConjunctionType;
 import ksrGut.logic.summaries.Summary;
@@ -9,7 +8,7 @@ import ksrGut.logic.summaries.quantifier.QuantifierRelativity;
 
 public class T1 {
     public String getName() {
-        return "Degree of truth";
+        return "Degree of truth (T1)";
     }
 
     public static double getValue(Summary summary) {

@@ -5,7 +5,7 @@ import ksrGut.logic.summaries.Summary;
 
 public class T4 {
     public static String getName() {
-        return "Degree of appropriateness";
+        return "Degree of appropriateness (T4)";
     }
 
     public static double getValue(Summary summary) {
@@ -17,16 +17,3 @@ public class T4 {
         return Math.abs(mulS - t3);
     }
 }
-//private double CalculateT4(LinguisticSummary summarization, double t3)
-//        {
-//        double mulS = 1.0;
-//        foreach (var summarizer in summarization.Summarizers)
-//        {
-//        double sumG = 0.0;
-//        foreach (var tuple in summarization.Data)
-//        {
-//        sumG += summarizer.CalculateMembership(tuple.Get(summarizer.Column)) > 0 ? 1.0 : 0;
-//        }
-//        mulS *= (sumG / summarization.Data.Count);
-//        }
-//        return Math.Abs(mulS - t3);

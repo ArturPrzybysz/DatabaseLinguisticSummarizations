@@ -7,7 +7,7 @@ import ksrGut.logic.summaries.SummaryWithQualifier;
 
 public class T3 {
     public static String getName() {
-        return "Degree of coverage";
+        return "Degree of coverage (T3)";
     }
 
     public static double getValue(Summary summary) {

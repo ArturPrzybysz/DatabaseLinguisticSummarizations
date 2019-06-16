@@ -17,8 +17,16 @@ public class Quantifier {
         this.function = function;
     }
 
-//    public double getDegreeOfFuzziness() {
-//        return function.getBase(relativity);
-//    }
+    public double getDegreeOfFuzziness() {
+        return function.getBase(relativity);
+    }
 
+    public double getCardinalityRatio() {
+        return function.getArea(relativity);
+    }
+
+    @Override
+    public String toString() {
+        return "test";
+    }
 }

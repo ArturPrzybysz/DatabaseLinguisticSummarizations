@@ -1,9 +1,5 @@
 package ksrGut.logic.characteristicFunction;
 
-import ksrGut.data.Tuple;
-
-import java.util.Objects;
-
 public class TriangularFunction extends CharacteristicFunction {
     public TriangularFunction(String columnName, double left, double center, double right) {
         super(columnName);
@@ -11,6 +7,7 @@ public class TriangularFunction extends CharacteristicFunction {
         this.right = right;
         this.center = center;
     }
+
 
     public TriangularFunction(double left, double center, double right) {
         super(null);
@@ -33,5 +30,15 @@ public class TriangularFunction extends CharacteristicFunction {
             return (right - x) / (right - center);
         else
             return 0.0;
+    }
+
+    @Override
+    public double getAreaRaw() {
+        return (right - left) / 2;
+    }
+
+    @Override
+    double getBaseRaw() {
+        return right - left;
     }
 }

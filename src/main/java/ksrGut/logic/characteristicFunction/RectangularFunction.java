@@ -1,11 +1,6 @@
 package ksrGut.logic.characteristicFunction;
 
-import ksrGut.data.Tuple;
-
-import java.util.Objects;
-
 public class RectangularFunction extends CharacteristicFunction {
-
     RectangularFunction(String columnName, double begin, double end) {
         super(columnName);
         this.begin = begin;
@@ -28,5 +23,15 @@ public class RectangularFunction extends CharacteristicFunction {
         } else {
             return 0.0;
         }
+    }
+
+    @Override
+    public double getAreaRaw() {
+        return end - begin;
+    }
+
+    @Override
+    double getBaseRaw() {
+        return end - begin;
     }
 }

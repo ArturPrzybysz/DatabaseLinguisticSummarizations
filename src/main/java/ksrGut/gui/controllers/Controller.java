@@ -1,6 +1,11 @@
 package ksrGut.gui.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import ksrGut.ProjectPaths;
 import ksrGut.logic.CrispSet;
 import ksrGut.logic.summaries.LinguisticVariable;
@@ -11,26 +16,40 @@ import tech.tablesaw.api.Table;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    private Table table;
+
     private CrispSet universe;
-    private List<LinguisticVariable> variables;
-    private List<Quantifier> quantifiers;
+    private ObservableList<LinguisticVariable> variables;
+    @FXML
+    private ListView<LinguisticVariable> variablesView;
+    @FXML
+    public ListView<Quantifier> quantifiersView;
+    private ObservableList<Quantifier> quantifiers;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            table = Table.read().file(ProjectPaths.dataPath.toString());
+            Table table = Table.read().file(ProjectPaths.dataPath.toString());
+            universe = new CrispSet(table);
+            variables = FXCollections.observableArrayList(LinguisticVariablesLoader.load(universe));
+            quantifiers = FXCollections.observableArrayList(QuantifiersLoader.load());
+            quantifiersView = new ListView<>(quantifiers);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        universe = new CrispSet(table);
-        variables = LinguisticVariablesLoader.load(universe);
-        quantifiers = QuantifiersLoader.load();
     }
 
 
+    public void generateSummaries(ActionEvent actionEvent) {
+        quantifiersView.refresh();
+    }
+
+    public void saveToFile(ActionEvent actionEvent) {
+    }
+
+    public void moveToFuzzySetsWindow(ActionEvent actionEvent) {
+    }
 }

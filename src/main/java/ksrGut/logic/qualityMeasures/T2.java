@@ -5,7 +5,7 @@ import ksrGut.logic.summaries.Summary;
 
 public class T2 {
     public static String getName() {
-        return "Degree of imprecision";
+        return "Degree of imprecision (T2)";
     }
 
     public static double getValue(Summary summary) {
