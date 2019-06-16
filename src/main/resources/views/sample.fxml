@@ -5,14 +5,13 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="675.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ksrGut.gui.controllers.Controller">
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="678.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ksrGut.gui.controllers.Controller">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -25,16 +24,16 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="24.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="124.0" minHeight="100.0" prefHeight="124.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Button mnemonicParsing="false" onAction="#generateSummaries" text="Summarize" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-        <Label text="Linguistic variables" GridPane.halignment="CENTER" />
-        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="2">
+        <Button mnemonicParsing="false" onAction="#generateSummary" text="Summarize" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+        <Label text="Linguistic variables" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.rowSpan="2">
             <children>
                 <CheckBox fx:id="t1CheckBox" mnemonicParsing="false" text="T1 " />
                 <CheckBox fx:id="t2CheckBox" mnemonicParsing="false" text="T2" />
@@ -49,25 +48,27 @@
                 <CheckBox fx:id="t11CheckBox" mnemonicParsing="false" text="T11" />
             </children>
         </VBox>
-        <Label text="Measures" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-        <Label text="Quantifiers" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4" />
-        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label prefWidth="63.0" text="Measures" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+        <Label text="Quantifiers" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+        <VBox prefHeight="100.0" prefWidth="155.0" GridPane.rowIndex="4">
+         <children>
+            <CheckBox mnemonicParsing="false" onAction="#switchQualifier" text="W: on, S: off" />
+            <Button mnemonicParsing="false" onAction="#addSand" text="AND" />
+            <Button mnemonicParsing="false" onAction="#addSor" text="OR" />
+         </children></VBox>
+        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="4" GridPane.rowIndex="5" GridPane.rowSpan="2">
-            <children>
-                <TableView fx:id="tableView" prefHeight="98.0" prefWidth="326.0">
-                    <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
-                    </columns>
-                </TableView>
-            </children>
+         <children>
+            <ListView fx:id="generatedSummarizer" prefHeight="171.0" prefWidth="648.0" />
+         </children>
         </VBox>
-        <Button mnemonicParsing="false" onAction="#saveToFile" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-        <ListView fx:id="variablesView" prefHeight="200.0" prefWidth="152.0" GridPane.rowIndex="2" GridPane.rowSpan="2" />
-        <ListView fx:id="quantifiersView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2" />
+        <ListView fx:id="variablesView" prefHeight="200.0" prefWidth="152.0" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
+        <ListView fx:id="quantifiersView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
       <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="186.0" text="New variable" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="186.0" text="New quantifier" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="186.0" text="New quantifier" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Label layoutX="35.0" layoutY="23.0" text="Generated summaries:" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+      <TableView fx:id="summariesView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="8" />
     </children>
     <padding>
         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />

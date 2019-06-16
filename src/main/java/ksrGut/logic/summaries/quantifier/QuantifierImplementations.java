@@ -8,7 +8,7 @@ public class QuantifierImplementations {
 
     // RELATIVE
     public static Quantifier HARDLY_ANY() {
-        return new Quantifier("hardly any", QuantifierRelativity.RELATIVE,
+        return new Quantifier("hardly_any", QuantifierRelativity.RELATIVE,
                 new TriangularFunction(null, 0, 0.1, 0.2));
     }
 
@@ -18,7 +18,7 @@ public class QuantifierImplementations {
     }
 
     public static Quantifier MORE_THAN_HALF() {
-        return new Quantifier("more than a half", QuantifierRelativity.RELATIVE,
+        return new Quantifier("more_than_a_half", QuantifierRelativity.RELATIVE,
                 new RisingFunction(null, 0.5, 0.6));
     }
 
@@ -34,37 +34,37 @@ public class QuantifierImplementations {
 
     // ABSOLUTE
     public static Quantifier ABOUT_0() {
-        return new Quantifier("about 0", QuantifierRelativity.ABSOLUTE,
+        return new Quantifier("about_0", QuantifierRelativity.ABSOLUTE,
                 new TriangularFunction(null, -1.0, 0, 1));
     }
 
     public static Quantifier ABOUT_5() {
-        return new Quantifier("about 5", QuantifierRelativity.ABSOLUTE,
+        return new Quantifier("about_5", QuantifierRelativity.ABSOLUTE,
                 new TriangularFunction(null, 3, 5, 7));
     }
 
     public static Quantifier ABOUT_25() {
-        return new Quantifier("about 25", QuantifierRelativity.ABSOLUTE,
+        return new Quantifier("about_25", QuantifierRelativity.ABSOLUTE,
                 new TriangularFunction(null, 20, 25, 30));
     }
 
     public static Quantifier ABOUT_100() {
-        return new Quantifier("about 100", QuantifierRelativity.ABSOLUTE,
+        return new Quantifier("about_100", QuantifierRelativity.ABSOLUTE,
                 new TriangularFunction(null, 85, 100, 115));
     }
 
     public static Quantifier ABOUT_500() {
-        return new Quantifier("about 500", QuantifierRelativity.ABSOLUTE,
+        return new Quantifier("about_500", QuantifierRelativity.ABSOLUTE,
                 new TriangularFunction(null, 450, 500, 550));
     }
 
     public static Quantifier ABOUT_1000() {
-        return new Quantifier("about 1000", QuantifierRelativity.ABSOLUTE,
+        return new Quantifier("about_1000", QuantifierRelativity.ABSOLUTE,
                 new TriangularFunction(null, 850, 1000, 1150));
     }
 
     public static Quantifier ABOUT_N(double N) {
-        return new Quantifier("about " + N, QuantifierRelativity.ABSOLUTE,
+        return new Quantifier("about_" + N, QuantifierRelativity.ABSOLUTE,
                 new TriangularFunction(null, N * 0.9, N, N * 1.1));
 
     }

@@ -6,6 +6,8 @@ import ksrGut.logic.summaries.Summary;
 import ksrGut.logic.summaries.SummaryWithQualifier;
 import ksrGut.logic.summaries.quantifier.QuantifierRelativity;
 
+import java.util.Objects;
+
 public class T1 {
     public String getName() {
         return "Degree of truth (T1)";
@@ -13,7 +15,9 @@ public class T1 {
 
     public static double getValue(Summary summary) {
         double operationResult = r(summary);
-        if (summary.getQuantifier().relativity == QuantifierRelativity.RELATIVE && !(summary instanceof SummaryWithQualifier)) {
+        if (!(summary instanceof SummaryWithQualifier)
+                && Objects.nonNull(summary.getQuantifier().relativity)
+                && summary.getQuantifier().relativity == QuantifierRelativity.RELATIVE) {
             operationResult /= summary.getSubjectsCount();
         }
         return summary.getQuantifier().function.applyRaw(operationResult);

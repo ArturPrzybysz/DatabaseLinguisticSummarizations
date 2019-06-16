@@ -4,8 +4,10 @@ import ksrGut.logic.CrispSet;
 import ksrGut.logic.FuzzySet;
 import ksrGut.logic.characteristicFunction.CharacteristicFunction;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LinguisticVariable {
     private String name;
@@ -32,5 +34,9 @@ public class LinguisticVariable {
 
     public Set<String> getCharacteristicFunctionsLabels() {
         return nameToFunction.keySet();
+    }
+
+    public List<String> getCharacteristicFunctionsLabelsWithName() {
+        return nameToFunction.keySet().stream().map(s1 -> s1 + " " + name).collect(Collectors.toList());
     }
 }

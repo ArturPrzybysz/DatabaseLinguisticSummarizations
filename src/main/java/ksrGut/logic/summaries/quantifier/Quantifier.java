@@ -27,6 +27,6 @@ public class Quantifier {
 
     @Override
     public String toString() {
-        return "test";
+        return name;
     }
 }

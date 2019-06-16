@@ -29,7 +29,7 @@ public class App {
             m.put("medium", new TriangularFunction(ColumnMap.alcohol, 10, 25, 35));
             m.put("non", new FallingFunction(ColumnMap.alcohol, 0, 1));
 
-            LinguisticVariable alcoholic = new LinguisticVariable("alcoholic", m, universe);
+            LinguisticVariable alcoholic = new LinguisticVariable("alcohol", m, universe);
 
             Map<String, CharacteristicFunction> m2 = new HashMap<>();
             m2.put("not", new FallingFunction(ColumnMap.fat, 0, 3));
@@ -37,7 +37,7 @@ public class App {
             m2.put("very", new TriangularFunction(ColumnMap.fat, 20, 50, 70));
             m2.put("a lot", new TriangularFunction(ColumnMap.fat, 50, 70, 100));
 
-            LinguisticVariable fatty = new LinguisticVariable("fatty", m2, universe);
+            LinguisticVariable fatty = new LinguisticVariable("fat", m2, universe);
 
             List<LinguisticVariable> summarizers = new ArrayList<>();
             List<LinguisticVariable> qualifiers = new ArrayList<>();

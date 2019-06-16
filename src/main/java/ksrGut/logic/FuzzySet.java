@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class FuzzySet {
     private CrispSet space;
     private Map<Tuple, Double> elements;
-    private double minX, maxX;
 
     public double getCharacteristicValue(Tuple tuple) {
         return this.elements.get(tuple);
