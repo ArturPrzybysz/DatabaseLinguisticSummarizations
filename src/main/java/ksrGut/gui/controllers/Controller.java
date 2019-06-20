@@ -1,44 +1,74 @@
 package ksrGut.gui.controllers;
 
+import com.google.common.primitives.Doubles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import ksrGut.ProjectPaths;
 import ksrGut.logic.CrispSet;
+import ksrGut.logic.characteristicFunction.FallingFunction;
+import ksrGut.logic.characteristicFunction.RectangularFunction;
+import ksrGut.logic.characteristicFunction.RisingFunction;
+import ksrGut.logic.characteristicFunction.TriangularFunction;
 import ksrGut.logic.norms.NormPairImplementations;
 import ksrGut.logic.summaries.ConjunctionType;
 import ksrGut.logic.summaries.LinguisticVariable;
 import ksrGut.logic.summaries.Summary;
 import ksrGut.logic.summaries.SummaryWithQualifier;
 import ksrGut.logic.summaries.quantifier.Quantifier;
+import ksrGut.logic.summaries.quantifier.QuantifierRelativity;
 import loaders.LinguisticVariablesLoader;
 import loaders.QuantifiersLoader;
 import tech.tablesaw.api.Table;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class Controller implements Initializable {
 
     @FXML
     ListView<String> variablesView;
     @FXML
-    ListView<String> generatedSummarizer;
+    ListView<String> variablesView2;
     @FXML
     ListView<Quantifier> quantifiersView;
-    
     @FXML
-    TableView<SummaryPOJO> summariesView;
+    ListView<Quantifier> quantifiersView2;
+    @FXML
+    ListView<String> generatedSummarizer;
+    @FXML
+    ChoiceBox<String> choiceBoxVariablesFeatures;
+    @FXML
+    ChoiceBox<String> choiceBoxVariablesCharacteristicFunction;
+    @FXML
+    ChoiceBox<String> choiceBoxVariablesCharacteristicFunction2;
+    @FXML
+    TextField variableItemNewName;
+    @FXML
+    TextField characteristicFunctionData;
+    @FXML
+    TextField characteristicFunctionData2;
+    @FXML
+    TextField quantifierName;
+    @FXML
+    CheckBox relativity;
+
+    @FXML
+    ListView<SummaryPOJO> summariesView;
     @FXML
     CheckBox t1CheckBox;
     @FXML
@@ -68,7 +98,6 @@ public class Controller implements Initializable {
     private ObservableList<String> generatedSummarizerStrings;
     private ObservableList<SummaryPOJO> summaryPOJOS;
 
-    private CrispSet universe;
     private List<LinguisticVariable> variables;
     private char currentlyChosenQW = 'S';
 
@@ -76,28 +105,12 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             joinAndInitLists();
-            initTable();
             setCallbacks();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void initTable() {
-        summariesView.setItems(summaryPOJOS);
-        summariesView.getColumns().clear();
-        TableColumn summaryColumn = new TableColumn<>("Summary");
-        summaryColumn.setVisible(true);
-        summaryColumn.setCellValueFactory(new PropertyValueFactory<>("summary"));
-        summariesView.getColumns().add(summaryColumn);
-
-        for (int i = 1; i <= 11; i++) {
-            TableColumn t = new TableColumn<>(String.format("T[%d]", i));
-            t.setVisible(true);
-            t.setCellValueFactory(new PropertyValueFactory<>("t" + i));
-            summariesView.getColumns().add(t);
-        }
-    }
 
     private boolean[] tMask() {
         boolean[] mask = new boolean[11];
@@ -117,7 +130,7 @@ public class Controller implements Initializable {
 
     private void joinAndInitLists() throws IOException {
         Table table = Table.read().file(ProjectPaths.dataPath.toString());
-        universe = new CrispSet(table);
+        CrispSet universe = new CrispSet(table);
         variables = LinguisticVariablesLoader.load(universe);
         List<String> functionNames = new ArrayList<>();
         for (LinguisticVariable lv : variables) {
@@ -126,12 +139,61 @@ public class Controller implements Initializable {
 
         nameToFunction = FXCollections.observableArrayList(functionNames);
         quantifiers = FXCollections.observableArrayList(QuantifiersLoader.load());
+        List<String> x = variables.stream().map(LinguisticVariable::getName).collect(Collectors.toList());
+        ObservableList<String> choiceBoxVariableList = FXCollections.observableArrayList(x);
         generatedSummarizerStrings = FXCollections.observableArrayList(new ArrayList<>());
         summaryPOJOS = FXCollections.observableArrayList(new ArrayList<>());
+        ObservableList<String> functions = FXCollections.observableArrayList("triangular", "rectangular", "falling", "rising");
+
 
         quantifiersView.setItems(quantifiers);
+        quantifiersView2.setItems(quantifiers);
         variablesView.setItems(nameToFunction);
+        variablesView2.setItems(nameToFunction);
         generatedSummarizer.setItems(generatedSummarizerStrings);
+        summariesView.setItems(summaryPOJOS);
+        choiceBoxVariablesFeatures.setItems(choiceBoxVariableList);
+        choiceBoxVariablesCharacteristicFunction.setItems(functions);
+        choiceBoxVariablesCharacteristicFunction2.setItems(functions);
+    }
+
+    public void createNewVariableElement(ActionEvent actionEvent) {
+        try {
+            String chosenVariable = choiceBoxVariablesFeatures.getValue();
+            LinguisticVariable lv = variables.stream()
+                    .filter(v -> chosenVariable.equals(v.getName()))
+                    .findFirst().orElse(null);
+
+            String newName = variableItemNewName.getText();
+            if (lv.getCharacteristicFunctionsLabels().contains(newName)) {
+                return;
+            }
+            List<Double> x = new ArrayList<>();
+            for (String s : characteristicFunctionData.getText().split(" ")) {
+                x.add(Doubles.tryParse(s));
+            }
+            String chosenFunction = choiceBoxVariablesCharacteristicFunction.getValue();
+            switch (chosenFunction) {
+                case "triangular":
+                    lv.addFunction(newName, new TriangularFunction(lv.getName(), x.get(0), x.get(1), x.get(2)));
+                    break;
+                case "rectangular":
+                    lv.addFunction(newName, new RectangularFunction(lv.getName(), x.get(0), x.get(1)));
+                    break;
+                case "rising":
+                    lv.addFunction(newName, new RisingFunction(lv.getName(), x.get(0), x.get(1)));
+                    break;
+                case "falling":
+                    lv.addFunction(newName, new FallingFunction(lv.getName(), x.get(0), x.get(1)));
+                    break;
+                default:
+                    return;
+            }
+
+            nameToFunction.add(newName + " " + lv.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setCallbacks() {
@@ -169,8 +231,46 @@ public class Controller implements Initializable {
         }
     }
 
-    public void saveToFile(ActionEvent actionEvent) {
+    public void createQuantifier(ActionEvent actionEvent) {
+        QuantifierRelativity quantifierRelativity;
+        if (relativity.isSelected()) quantifierRelativity = QuantifierRelativity.RELATIVE;
+        else quantifierRelativity = QuantifierRelativity.ABSOLUTE;
+        List<Double> x = new ArrayList<>();
+        for (String s : characteristicFunctionData2.getText().split(" ")) {
+            x.add(Doubles.tryParse(s));
+        }
+        String quantifierName = this.quantifierName.getText().replace(" ", "_");
 
+        String chosenFunction = choiceBoxVariablesCharacteristicFunction2.getValue();
+        switch (chosenFunction) {
+            case "triangular":
+                quantifiers.add(new Quantifier(quantifierName, quantifierRelativity, new TriangularFunction(null, x.get(0), x.get(1), x.get(2))));
+                break;
+            case "rectangular":
+                quantifiers.add(new Quantifier(quantifierName, quantifierRelativity, new RectangularFunction(null, x.get(0), x.get(1))));
+                break;
+            case "rising":
+                quantifiers.add(new Quantifier(quantifierName, quantifierRelativity, new RisingFunction(null, x.get(0), x.get(1))));
+                break;
+            case "falling":
+                quantifiers.add(new Quantifier(quantifierName, quantifierRelativity, new FallingFunction(null, x.get(0), x.get(1))));
+                break;
+        }
+    }
+
+    public void saveSummaries(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File selectedFile = fileChooser.showSaveDialog(null);
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile))) {
+            for (SummaryPOJO item : summaryPOJOS) {
+                writer.write(item.toString());
+                writer.write('\n');
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addSand() {

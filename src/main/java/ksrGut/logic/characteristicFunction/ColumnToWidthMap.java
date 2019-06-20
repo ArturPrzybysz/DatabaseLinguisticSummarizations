@@ -33,5 +33,6 @@ class ColumnToWidthMap {
         map.put(ColumnMap.magnesium, 10000.0);
         map.put(ColumnMap.cholesterol, 10000.0);
         map.put(ColumnMap.caffeine, 10000.0);
+        map.put(ColumnMap.energy, 10000.0);
     }
 }

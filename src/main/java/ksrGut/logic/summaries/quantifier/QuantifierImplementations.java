@@ -24,7 +24,7 @@ public class QuantifierImplementations {
 
     public static Quantifier MOST() {
         return new Quantifier("most", QuantifierRelativity.RELATIVE,
-                new RisingFunction(null, 0.7, 0.1));
+                new RisingFunction(null, 0.7, 1.0));
     }
 
     public static Quantifier LEAST() {

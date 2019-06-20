@@ -41,12 +41,16 @@ public class SummaryWithQualifier extends Summary {
 
     public FuzzySet getWholeQualifier() {
         List<FuzzySet> qualifiers = getQualifierSets();
+        if (qualifiers.size() == 1) {
+            return qualifiers.get(0);
+        }
         FuzzySet qualifier = qualifiers.get(0);
         for (int i = 1; i < qualifiers.size(); i++) {
-            qualifier = qualifier.conjunction(this.normPair, qualifierConjunctions.get(i), qualifiers.get(i + 1));
+            qualifier = qualifier.conjunction(this.normPair, qualifierConjunctions.get(i - 1), qualifiers.get(i));
         }
         return qualifier;
     }
+
 
     @Override
     public String toString() {

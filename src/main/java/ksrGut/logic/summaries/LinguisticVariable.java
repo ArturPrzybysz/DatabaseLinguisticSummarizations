@@ -39,4 +39,8 @@ public class LinguisticVariable {
     public List<String> getCharacteristicFunctionsLabelsWithName() {
         return nameToFunction.keySet().stream().map(s1 -> s1 + " " + name).collect(Collectors.toList());
     }
+
+    public void addFunction(String name, CharacteristicFunction function) {
+        nameToFunction.put(name, function);
+    }
 }

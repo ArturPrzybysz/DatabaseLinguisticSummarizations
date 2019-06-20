@@ -31,7 +31,7 @@ public class FuzzySet {
     }
 
     public double getDegreeOfFuzziness() {
-        return cardinality() / space.getElements().size();
+        return support().getElements().size() / space.getElements().size();
     }
 
     public double getCardinalityRatio() {

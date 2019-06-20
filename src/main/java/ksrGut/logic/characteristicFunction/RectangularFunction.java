@@ -1,7 +1,7 @@
 package ksrGut.logic.characteristicFunction;
 
 public class RectangularFunction extends CharacteristicFunction {
-    RectangularFunction(String columnName, double begin, double end) {
+    public RectangularFunction(String columnName, double begin, double end) {
         super(columnName);
         this.begin = begin;
         this.end = end;
