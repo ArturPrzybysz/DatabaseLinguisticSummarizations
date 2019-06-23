@@ -20,7 +20,6 @@ public class T3 {
         } else {
             return tNoQualifier(summary);
         }
-
     }
 
     private static double tWithQualifier(Summary summary) {

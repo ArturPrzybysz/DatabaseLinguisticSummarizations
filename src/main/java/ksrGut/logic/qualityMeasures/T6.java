@@ -8,7 +8,7 @@ public class T6 {
     }
 
     public static double getValue(Summary summary) {
-        return 1 - summary.getQuantifier().getDegreeOfFuzziness();
+        return 1 - summary.getQuantifier().getDegreeOfFuzzinessForFunction();
     }
 
 }

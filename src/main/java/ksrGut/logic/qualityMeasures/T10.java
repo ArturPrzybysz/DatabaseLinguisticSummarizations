@@ -16,8 +16,8 @@ public class T10 {
             return 0;
 
         List<FuzzySet> qualifiers = ((SummaryWithQualifier) summary).getQualifierSets();
-        double piCardinality = qualifiers.stream().mapToDouble(FuzzySet::getDegreeOfFuzziness).reduce(1, (a, b) -> a * b);
-        return 1 - Math.pow(Math.E, Math.log(piCardinality) / qualifiers.size());
+        double piCardinality = qualifiers.stream().mapToDouble(FuzzySet::getCardinalityRatioForFunction).reduce(1, (a, b) -> a * b);
+        return 1 - Math.pow(piCardinality, 1.0 / (double) qualifiers.size());
     }
 
 }

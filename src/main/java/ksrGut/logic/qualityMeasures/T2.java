@@ -10,7 +10,7 @@ public class T2 {
 
     public static double getValue(Summary summary) {
         return summary.getSummarizerSets().stream()
-                .mapToDouble(FuzzySet::getDegreeOfFuzziness)
+                .mapToDouble(FuzzySet::getDegreeOfFuzzinessForFunction)
                 .reduce(1, (a, b) -> a * b);
     }
 }

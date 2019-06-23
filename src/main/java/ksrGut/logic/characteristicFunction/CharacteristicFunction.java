@@ -1,12 +1,12 @@
 package ksrGut.logic.characteristicFunction;
 
 import ksrGut.data.Tuple;
-import ksrGut.logic.summaries.quantifier.QuantifierRelativity;
 
 import java.util.Objects;
 import java.util.function.Function;
 
 public abstract class CharacteristicFunction implements Function<Tuple, Double> {
+
     String columnName;
 
     CharacteristicFunction(String columnName) {
@@ -19,10 +19,8 @@ public abstract class CharacteristicFunction implements Function<Tuple, Double> 
 
     abstract double getBaseRaw();
 
-    public double getArea(QuantifierRelativity relativity) {
-        if (relativity.equals(QuantifierRelativity.RELATIVE)) {
-            return getAreaRaw();
-        } else return getAreaRaw() / ColumnToWidthMap.get(columnName);
+    public double getArea() {
+        return getAreaRaw();
     }
 
     @Override
@@ -32,10 +30,13 @@ public abstract class CharacteristicFunction implements Function<Tuple, Double> 
         return applyRaw(x);
     }
 
-    public double getBase(QuantifierRelativity relativity) {
-        if (relativity.equals(QuantifierRelativity.RELATIVE)) {
-            return getBaseRaw();
-        } else return getBaseRaw() / ColumnToWidthMap.get(columnName);
+    public double getBase() {
+        return getBaseRaw();
     }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
 }
 

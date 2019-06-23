@@ -16,8 +16,8 @@ public class T9 {
             return 0;
         }
         List<FuzzySet> qualifiers = ((SummaryWithQualifier) summary).getQualifierSets();
-        double piFuzziness = qualifiers.stream().mapToDouble(FuzzySet::getDegreeOfFuzziness).reduce(1, (a, b) -> a * b);
-        return 1 - Math.pow(Math.E, Math.log(piFuzziness) / qualifiers.size());
+        double piFuzziness = qualifiers.stream().mapToDouble(FuzzySet::getDegreeOfFuzzinessForFunction).reduce(1, (a, b) -> a * b);
+        return 1 - Math.pow(piFuzziness, 1.0 / (double) qualifiers.size());
     }
 
 }

@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-class ColumnToWidthMap {
+public class ColumnToWidthMap {
     private static Map<String, Double> map;
 
-    static double get(String columnName) {
+    public static double get(String columnName) {
         if (Objects.isNull(map)) {
             initMap();
         }

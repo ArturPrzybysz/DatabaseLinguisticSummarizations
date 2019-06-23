@@ -12,8 +12,9 @@ public class T8 {
 
     public static double getValue(Summary summary) {
         List<FuzzySet> summarizers = summary.getSummarizerSets();
-        double piCardinality = summarizers.stream().mapToDouble(FuzzySet::getCardinalityRatio).reduce(1, (a, b) -> a * b);
-        return 1 - Math.pow(Math.E, Math.log(piCardinality) / summarizers.size());
+        double piCardinality = summarizers.stream().
+                mapToDouble(FuzzySet::getCardinalityRatioForFunction).reduce(1, (a, b) -> a * b);
+        return 1 - Math.pow(piCardinality, 1.0 / (double) summarizers.size());
     }
 
 }

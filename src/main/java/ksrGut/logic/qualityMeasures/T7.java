@@ -8,6 +8,6 @@ public class T7 {
     }
 
     public static double getValue(Summary summary) {
-        return 1 - summary.getQuantifier().getCardinalityRatio();
+        return 1 - summary.getQuantifier().getCardinalityRatioForFunction();
     }
 }

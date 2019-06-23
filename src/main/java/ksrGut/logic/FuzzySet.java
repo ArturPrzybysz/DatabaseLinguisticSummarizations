@@ -2,6 +2,7 @@ package ksrGut.logic;
 
 import ksrGut.data.Tuple;
 import ksrGut.logic.characteristicFunction.CharacteristicFunction;
+import ksrGut.logic.characteristicFunction.ColumnToWidthMap;
 import ksrGut.logic.norms.NormPair;
 import ksrGut.logic.summaries.ConjunctionType;
 
@@ -13,6 +14,8 @@ import java.util.stream.Collectors;
 public class FuzzySet {
     private CrispSet space;
     private Map<Tuple, Double> elements;
+    private double maxValue;
+    private CharacteristicFunction characteristicFunction;
 
     public double getCharacteristicValue(Tuple tuple) {
         return this.elements.get(tuple);
@@ -22,7 +25,8 @@ public class FuzzySet {
         elements = space.getElements().stream()
                 .collect(Collectors.toMap(e -> e, characteristicFunction));
         this.space = space;
-
+        this.maxValue = ColumnToWidthMap.get(characteristicFunction.getColumnName());
+        this.characteristicFunction = characteristicFunction;
     }
 
     public FuzzySet(CrispSet space, Map<Tuple, Double> elements) {
@@ -30,12 +34,20 @@ public class FuzzySet {
         this.space = space;
     }
 
-    public double getDegreeOfFuzziness() {
+    public double getDegreeOfFuzzinessForElements() {
         return support().getElements().size() / space.getElements().size();
     }
 
-    public double getCardinalityRatio() {
+    public double getDegreeOfFuzzinessForFunction() {
+        return this.characteristicFunction.getBase() / this.maxValue;
+    }
+
+    public double getCardinalityRatioForElements() {
         return cardinality() / space.getElements().size();
+    }
+
+    public double getCardinalityRatioForFunction() {
+        return this.characteristicFunction.getArea() / this.maxValue;
     }
 
     FuzzySet complement() {
